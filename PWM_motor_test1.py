@@ -2,7 +2,7 @@
 #
 # 2021-04-22
 
-import RPI.GPIO as GPIO
+import RPi.GPIO as GPIO
 GPIO.setmode(GPIO.BOARD)
 GPIO.setup(32,GPIO.OUT)			#GPIO 12 PWM 0
 
