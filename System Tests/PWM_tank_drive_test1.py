@@ -47,6 +47,8 @@ class Tank:
 	def __init__(self, left, right):
 		self.left = left
 		self.right = right
+	def setup(self):
+		pass
 	def forward(self, duty_cycle):
 		self.left.forward(duty_cycle)
 		self.right.forward(duty_cycle)
