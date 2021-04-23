@@ -5,10 +5,10 @@
 # Written by: The Autonomous Metal Detector Robot capstone group at TnTech.
 #
 #	What to check on next test with the robot:
-#	1. Check that the class works with init and setup by running the code as is.
-#	2. Test that the body code works by running the code as is.
+#	1. Check that the class works with init and setup by running the code as is. ***DONE, works fine.
+#	2. Test that the body code works by running the code as is.	***DONE, works fine.
 #	3. Run and get the correct directions for ML and MR in the globals through trial and 
-#		error.
+#		error.	***Done, was wrong to start but the directions are now set.
 #	4. Try commented code in the class definition and getting the correct directions for 
 #		forward and reverse.
 #	5. If the class code works, try commenting out the code in the body and and uncomment 
@@ -67,16 +67,16 @@ mr_reversed = True;	#True if reversed, False if normal rotation
 
 
 #------------------------------Create and Setup Objects----------------------------------
-MR = Motor(ml_pwm_pin, ml_dir_pin, ml_clock_f, ml_reversed)
+MR = Motor(mr_pwm_pin, mr_dir_pin, mr_clock_f, mr_reversed)
 MR.setup()
-ML = Motor(mr_pwm_pin, mr_dir_pin, mr_clock_f, mr_reversed)
+ML = Motor(ml_pwm_pin, ml_dir_pin, ml_clock_f, ml_reversed)
 ML.setup()
 
 
 
 #-------------------------------------Program Body---------------------------------------
-GPIO.output(ML.direction_pin, GPIO.LOW)	#set direction fwd = high, rev = low
-GPIO.output(MR.direction_pin, GPIO.HIGH)
+GPIO.output(ML.direction_pin, GPIO.HIGH)	#set direction norm = low, rev = high
+GPIO.output(MR.direction_pin, GPIO.LOW)
 mr_pwm = GPIO.PWM(MR.pwm_pin, MR.clock_frequency)	#set PWM on ml_pwm_pin to 1 kHz PWM clock
 ml_pwm = GPIO.PWM(ML.pwm_pin, ML.clock_frequency)
 mr_pwm.start(25)					#25% duty cycle
