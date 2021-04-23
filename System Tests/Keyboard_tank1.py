@@ -1,18 +1,27 @@
-# This is to test both motors and PWM setup using classes and functions.  The class and 
-# dependent functions created here can be used to set up the motors in other bits of code
-# or together as a tank drive.
+# This uses keyboard inputs to drive the robot like a tank.
 #
 # 2021-04-23
 # Written by: The Autonomous Metal Detector Robot capstone group at TnTech.
 #
-#	What to check on next test with the robot:
-#	1. Test other Tank functions.
+#	How to drive:
+#		w: forward
+#		s: reverse
+#		a: turn left
+#		d: turn right
+#		l: turn left on center axis
+#		r: turn right on center axis
+#		arrow up: increase speed
+#		arrow down: decrease speed
+#		e: stop the program
 
 
 
 #-------------------------------------Libraries------------------------------------------
 import RPi.GPIO as GPIO		#include the GPIO library
 GPIO.setmode(GPIO.BOARD)	#use physical layout numbering system
+import curses				#include the curses read keyboard ascii library
+
+GPIO.setwarnings(False)		#turns off warning messages
 
 
 
@@ -95,10 +104,43 @@ ML = Motor(ml_pwm_pin, ml_dir_pin, ml_clock_f, ml_reversed)
 Robot = Tank(ML, MR)
 Robot.setup()
 
+#set up curses screen
+screen = curses.initscr()	#get the curses window
+curses.noecho()				#turn of echoing the keyboard to the screen
+curses.cbreak()				#turn on instant (no wait) key response
+curses.halfdelay(3)			#
+screen.keypad(True)			#use special values for cursor keys
 
 
 #-------------------------------------Program Body---------------------------------------
-Robot.forward(25)					#change this line to test each direction/rotation
-throw_away_val = input("Enter some char and press enter to stop: ")	#stops the robot
-Robot.stop()						#stops tank
-GPIO.cleanup()						#used to clean up anything the GPIO library creates
+try:
+	speed = 25
+	while True:
+		char = screen.getch()
+		if char == ord('e'):
+			break
+		elif char == ord('q'):
+			Robot.forward(speed)
+		elif char == ord('s'):
+			Robot.reverse(speed)
+		elif char == ord('a'):
+			Robot.left(speed)
+		elif char == ord('d'):
+			Robot.right(speed)
+		elif char == ord('l'):
+			Robot.left_on_axis(speed)
+		elif char == ord('r'):
+			Robot.right_on_axis(speed)
+		elif char == curses.KEY_UP and speed < 100:
+			speed++
+		elif char == curses.KEY_DOWN and speed > 0:
+			speed--
+		else:
+			Robot.stop()
+
+finally:
+	curses.nocbreak()
+	screen.keypad(False)
+	curses.echo()
+	curses.endwin()
+	GPIO.cleanup()			#used to clean up anything the GPIO library creates
