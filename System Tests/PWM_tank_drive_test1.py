@@ -5,14 +5,7 @@
 # Written by: The Autonomous Metal Detector Robot capstone group at TnTech.
 #
 #	What to check on next test with the robot:
-#	1. Check that the class works with init and setup by running the code as is. ***DONE, works fine.
-#	2. Test that the body code works by running the code as is.	***DONE, works fine.
-#	3. Run and get the correct directions for ML and MR in the globals through trial and 
-#		error.	***Done, was wrong to start but the directions are now set correctly.
-#	4. Try commented code in the class definition and getting the correct directions for 
-#		forward and reverse.	***DONE, works fine.
-#	5. If the class code works, try commenting out the code in the body and and uncomment 
-#		the code after it.	***DONE, works fine.
+#	1. Check if Tank drive class works.
 #edit
 
 
@@ -49,6 +42,20 @@ class Motor:
 		self.m_pwm.start(speed)						#restart at new speed
 	def stop(self):
 		self.m_pwm.stop()							#stop
+
+class Tank:
+	def __init__(self, left, right):
+		self.left = left
+		self.right = right
+	def forward(self, duty_cycle):
+		self.left.forward(duty_cycle)
+		self.right.forward(duty_cycle)
+	def reverse(self, duty_cycle):
+		self.left.reverse(duty_cycle)
+		self.right.reverse(duty_cycle)
+	def stop(self):
+		self.left.stop()
+		self.right.stop()
 	
 		
 		
@@ -72,15 +79,15 @@ MR.setup()
 ML = Motor(ml_pwm_pin, ml_dir_pin, ml_clock_f, ml_reversed)
 ML.setup()
 
+Robot = Tank(ML, MR)
+Robot.setup()
+
 
 
 #-------------------------------------Program Body---------------------------------------
-MR.forward(25)						#goes forward
-ML.forward(25)
+Robot.forward(25)						#goes forward
 throw_away_val = input("Enter some char and press enter to change directions: ")	#reverses direction
-MR.reverse(25)						#goes in reverse
-ML.reverse(25)
+Robot.reverse(25)						#goes in reverse
 throw_away_val = input("Enter some char and press enter to stop: ")	#stops the robot
-MR.stop()							#stops mr motor
-ML.stop()
+Robot.stop()						#stops tank
 GPIO.cleanup()						#used to clean up anything the GPIO library creates
