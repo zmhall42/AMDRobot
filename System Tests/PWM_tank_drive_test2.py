@@ -80,12 +80,12 @@ class Tank:
 mr_pwm_pin = 32	#GPIO 12 PWM for M1
 mr_dir_pin = 29	#GPIO 5 DIR for M1
 mr_clock_f = 1000	#PWM clock set to 1 kHz
-mr_reversed = False;	#True if reversed, False if normal rotation
+mr_reversed = True;	#True if reversed, False if normal rotation
 #Left Side
 ml_pwm_pin = 12 #GPIO 18 PWM for M2 - Left SIde
 ml_dir_pin = 36	#GPIO 16 DIR for M2
 ml_clock_f = 1000	#PWM clock set to 1 kHz
-ml_reversed = True;	#True if reversed, False if normal rotation
+ml_reversed = False;	#True if reversed, False if normal rotation
 
 
 
@@ -98,7 +98,6 @@ Robot.setup()
 
 
 #-------------------------------------Program Body---------------------------------------
-#MR.forward(25)
 Robot.left_on_axis(25)					#change this line to test each direction/rotation
 throw_away_val = input("Enter some char and press enter to stop: ")	#stops the robot
 Robot.stop()						#stops tank
