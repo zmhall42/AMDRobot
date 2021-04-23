@@ -8,7 +8,7 @@
 #	1. Check that the class works with init and setup by running the code as is. ***DONE, works fine.
 #	2. Test that the body code works by running the code as is.	***DONE, works fine.
 #	3. Run and get the correct directions for ML and MR in the globals through trial and 
-#		error.	***Done, was wrong to start but the directions are now set.
+#		error.	***Done, was wrong to start but the directions are now set correctly.
 #	4. Try commented code in the class definition and getting the correct directions for 
 #		forward and reverse.
 #	5. If the class code works, try commenting out the code in the body and and uncomment 
@@ -32,23 +32,23 @@ class Motor:
 	def setup(self):
 		GPIO.setup(self.pwm_pin, GPIO.OUT)
 		GPIO.setup(self.direction_pin, GPIO.OUT)
-#		self.m_pwm = GPIO.PWM(self.pwm_pin, self.clock_frequency)
-#	def forward(self, speed):
-#		self.m_pwm.stop()							#stop
-#		if self.reversed == True:					#check if reversed and set correct direction
-#			GPIO.output(self.direction_pin, GPIO.HIGH)
-#		else:
-#			GPIO.output(self.direction_pin, GPIO.LOW)
-#		self.m_pwm.start(speed)						#restart at new speed
-#	def reverse(self, speed):
-#		self.m_pwm.stop()							#stop
-#		if self.reversed == True:					#check if reversed and set correct direction
-#			GPIO.output(self.direction_pin, GPIO.LOW)
-#		else:
-#			GPIO.output(self.direction_pin, GPIO.HIGH)
-#		self.m_pwm.start(speed)						#restart at new speed
-#	def stop(self)
-#		self.m_pwm.stop()							#stop
+		self.m_pwm = GPIO.PWM(self.pwm_pin, self.clock_frequency)
+	def forward(self, speed):
+		self.m_pwm.stop()							#stop
+		if self.reversed == True:					#check if reversed and set correct direction
+			GPIO.output(self.direction_pin, GPIO.HIGH)
+		else:
+			GPIO.output(self.direction_pin, GPIO.LOW)
+		self.m_pwm.start(speed)						#restart at new speed
+	def reverse(self, speed):
+		self.m_pwm.stop()							#stop
+		if self.reversed == True:					#check if reversed and set correct direction
+			GPIO.output(self.direction_pin, GPIO.LOW)
+		else:
+			GPIO.output(self.direction_pin, GPIO.HIGH)
+		self.m_pwm.start(speed)						#restart at new speed
+	def stop(self)
+		self.m_pwm.stop()							#stop
 	
 		
 		
@@ -57,12 +57,12 @@ class Motor:
 ml_pwm_pin = 32	#GPIO 12 PWM for M1
 ml_dir_pin = 29	#GPIO 5 DIR for M1
 ml_clock_f = 1000	#PWM clock set to 1 kHz
-ml_reversed = False;	#True if reversed, False if normal rotation
+ml_reversed = True;	#True if reversed, False if normal rotation
 #Right Side
 mr_pwm_pin = 12 #GPIO 18 PWM for M2 - Left SIde
 mr_dir_pin = 36	#GPIO 16 DIR for M2
 mr_clock_f = 1000	#PWM clock set to 1 kHz
-mr_reversed = True;	#True if reversed, False if normal rotation
+mr_reversed = False;	#True if reversed, False if normal rotation
 
 
 
@@ -75,25 +75,25 @@ ML.setup()
 
 
 #-------------------------------------Program Body---------------------------------------
-GPIO.output(ML.direction_pin, GPIO.HIGH)	#set direction norm = low, rev = high
-GPIO.output(MR.direction_pin, GPIO.LOW)
-mr_pwm = GPIO.PWM(MR.pwm_pin, MR.clock_frequency)	#set PWM on ml_pwm_pin to 1 kHz PWM clock
-ml_pwm = GPIO.PWM(ML.pwm_pin, ML.clock_frequency)
-mr_pwm.start(25)					#25% duty cycle
-ml_pwm.start(25)
-input("Press return to stop: ")		#wait on terminal input of the enter/return key
-mr_pwm.stop()						#stops ml motor
-ml_pwm.stop()
-GPIO.cleanup()						#used to clean up anything the GPIO library creates
-
-
-
-#MR.forward(25)						#goes forward
-#ML.forward(25)
-#input("Press return to change directions: ")	#enter reverses direction
-#MR.reverse(25)						#goes in reverse
-#ML.reverse(25)
-#input("Press return to stop: ")	#enter stops the robot
-#MR.stop()							#stops mr motor
-#ML.stop()
+#GPIO.output(ML.direction_pin, GPIO.HIGH)	#set direction norm = low, rev = high
+#GPIO.output(MR.direction_pin, GPIO.LOW)
+#mr_pwm = GPIO.PWM(MR.pwm_pin, MR.clock_frequency)	#set PWM on ml_pwm_pin to 1 kHz PWM clock
+#ml_pwm = GPIO.PWM(ML.pwm_pin, ML.clock_frequency)
+#mr_pwm.start(25)					#25% duty cycle
+#ml_pwm.start(25)
+#input("Press return to stop: ")		#wait on terminal input of the enter/return key
+#mr_pwm.stop()						#stops ml motor
+#ml_pwm.stop()
 #GPIO.cleanup()						#used to clean up anything the GPIO library creates
+
+
+
+MR.forward(25)						#goes forward
+ML.forward(25)
+input("Press return to change directions: ")	#enter reverses direction
+MR.reverse(25)						#goes in reverse
+ML.reverse(25)
+input("Press return to stop: ")	#enter stops the robot
+MR.stop()							#stops mr motor
+ML.stop()
+GPIO.cleanup()						#used to clean up anything the GPIO library creates
