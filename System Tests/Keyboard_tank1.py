@@ -119,7 +119,7 @@ try:
 		char = screen.getch()
 		if char == ord('e'):
 			break
-		elif char == ord('q'):
+		elif char == ord('w'):
 			Robot.forward(speed)
 		elif char == ord('s'):
 			Robot.reverse(speed)
