@@ -82,7 +82,7 @@ class Tank:
 	def stop(self):
 		self.left.stop()
 		self.right.stop()
-	def cleanup()
+	def cleanup(self):
 		self.left.cleanup()
 		self.right.cleanup()
 	
