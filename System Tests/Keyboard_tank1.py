@@ -36,22 +36,23 @@ class Motor:
 		GPIO.setup(self.pwm_pin, GPIO.OUT)
 		GPIO.setup(self.direction_pin, GPIO.OUT)
 		self.m_pwm = GPIO.PWM(self.pwm_pin, self.clock_frequency)
+		self.m_pwm.start(0)							#start at 0 duty cycle
 	def forward(self, speed):
-		self.m_pwm.stop()							#stop
 		if self.reversed == True:					#check if reversed and set correct direction
 			GPIO.output(self.direction_pin, GPIO.HIGH)
 		else:
 			GPIO.output(self.direction_pin, GPIO.LOW)
-		self.m_pwm.start(speed)						#restart at new speed
+		self.m_pwm.ChangeDutyCycle(speed)			#restart at new speed
 	def reverse(self, speed):
-		self.m_pwm.stop()							#stop
 		if self.reversed == True:					#check if reversed and set correct direction
 			GPIO.output(self.direction_pin, GPIO.LOW)
 		else:
 			GPIO.output(self.direction_pin, GPIO.HIGH)
-		self.m_pwm.start(speed)						#restart at new speed
+		self.m_pwm.ChangeDutyCycle(speed)			#restart at new speed
 	def stop(self):
-		self.m_pwm.stop()							#stop
+		self.m_pwm.ChangeDutyCycle(0)				#stop
+	def cleanup(self):
+		self.m_pwm.stop()
 
 class Tank:
 	def __init__(self, left, right):
@@ -81,6 +82,9 @@ class Tank:
 	def stop(self):
 		self.left.stop()
 		self.right.stop()
+	def cleanup()
+		self.left.cleanup()
+		self.right.cleanup()
 	
 		
 		
@@ -143,4 +147,5 @@ finally:
 	screen.keypad(False)
 	curses.echo()
 	curses.endwin()
+	Robot.cleanup()
 	GPIO.cleanup()			#used to clean up anything the GPIO library creates
