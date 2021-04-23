@@ -132,9 +132,9 @@ try:
 		elif char == ord('r'):
 			Robot.right_on_axis(speed)
 		elif char == curses.KEY_UP and speed < 100:
-			speed++
+			speed += 1
 		elif char == curses.KEY_DOWN and speed > 0:
-			speed--
+			speed -= 1
 		else:
 			Robot.stop()
 
