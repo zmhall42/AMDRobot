@@ -98,7 +98,8 @@ Robot.setup()
 
 
 #-------------------------------------Program Body---------------------------------------
-Robot.left_on_axis(25)					#change this line to test each direction/rotation
+ML.forward(25)
+#Robot.left_on_axis(25)					#change this line to test each direction/rotation
 throw_away_val = input("Enter some char and press enter to stop: ")	#stops the robot
 Robot.stop()						#stops tank
 GPIO.cleanup()						#used to clean up anything the GPIO library creates
