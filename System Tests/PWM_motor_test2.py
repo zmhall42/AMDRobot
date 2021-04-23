@@ -90,10 +90,10 @@ ML.setup()
 
 MR.forward(25)						#goes forward
 ML.forward(25)
-input("Press return to change directions: ")	#enter reverses direction
+throw_away_val = input("Press return to change directions: ")	#enter reverses direction
 MR.reverse(25)						#goes in reverse
 ML.reverse(25)
-input("Press return to stop: ")	#enter stops the robot
+throw_away_val = input("Press return to stop: ")	#enter stops the robot
 MR.stop()							#stops mr motor
 ML.stop()
 GPIO.cleanup()						#used to clean up anything the GPIO library creates
