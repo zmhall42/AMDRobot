@@ -91,17 +91,14 @@ mr_reversed = False;	#True if reversed, False if normal rotation
 
 #------------------------------Create and Setup Objects----------------------------------
 MR = Motor(mr_pwm_pin, mr_dir_pin, mr_clock_f, mr_reversed)
-#MR.setup()
 ML = Motor(ml_pwm_pin, ml_dir_pin, ml_clock_f, ml_reversed)
-#ML.setup()
-
 Robot = Tank(ML, MR)
 Robot.setup()
 
 
 
 #-------------------------------------Program Body---------------------------------------
-Robot.left_on_axis(25)					#change this line to test each direction/rotation
+Robot.right_on_axis(25)					#change this line to test each direction/rotation
 throw_away_val = input("Enter some char and press enter to stop: ")	#stops the robot
 Robot.stop()						#stops tank
 GPIO.cleanup()						#used to clean up anything the GPIO library creates
