@@ -47,7 +47,7 @@ class Motor:
 		else:
 			GPIO.output(self.direction_pin, GPIO.HIGH)
 		self.m_pwm.start(speed)						#restart at new speed
-	def stop(self)
+	def stop(self):
 		self.m_pwm.stop()							#stop
 	
 		
