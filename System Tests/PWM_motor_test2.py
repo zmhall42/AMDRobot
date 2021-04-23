@@ -75,25 +75,12 @@ ML.setup()
 
 
 #-------------------------------------Program Body---------------------------------------
-#GPIO.output(ML.direction_pin, GPIO.HIGH)	#set direction norm = low, rev = high
-#GPIO.output(MR.direction_pin, GPIO.LOW)
-#mr_pwm = GPIO.PWM(MR.pwm_pin, MR.clock_frequency)	#set PWM on ml_pwm_pin to 1 kHz PWM clock
-#ml_pwm = GPIO.PWM(ML.pwm_pin, ML.clock_frequency)
-#mr_pwm.start(25)					#25% duty cycle
-#ml_pwm.start(25)
-#input("Press return to stop: ")		#wait on terminal input of the enter/return key
-#mr_pwm.stop()						#stops ml motor
-#ml_pwm.stop()
-#GPIO.cleanup()						#used to clean up anything the GPIO library creates
-
-
-
 MR.forward(25)						#goes forward
 ML.forward(25)
-throw_away_val = input("Press return to change directions: ")	#enter reverses direction
+throw_away_val = input("Enter some char and press enter to change directions: ")	#reverses direction
 MR.reverse(25)						#goes in reverse
 ML.reverse(25)
-throw_away_val = input("Press return to stop: ")	#enter stops the robot
+throw_away_val = input("Enter some char and press enter to stop: ")	#stops the robot
 MR.stop()							#stops mr motor
 ML.stop()
 GPIO.cleanup()						#used to clean up anything the GPIO library creates
