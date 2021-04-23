@@ -123,21 +123,21 @@ try:
 		char = screen.getch()
 		if char == ord('e'):
 			break
-		elif char == ord('w'):
+		elif char == curses.KEY_UP:
 			Robot.forward(speed)
-		elif char == ord('s'):
+		elif char == curses.KEY_DOWN:
 			Robot.reverse(speed)
-		elif char == ord('a'):
+		elif char == curses.KEY_LEFT:
 			Robot.left(speed)
-		elif char == ord('d'):
+		elif char == curses.KEY_RIGHT:
 			Robot.right(speed)
 		elif char == ord('l'):
 			Robot.left_on_axis(speed)
 		elif char == ord('r'):
 			Robot.right_on_axis(speed)
-		elif char == curses.KEY_UP and speed < 100:
+		elif char == ord('w') and speed < 100:
 			speed += 1
-		elif char == curses.KEY_DOWN and speed > 0:
+		elif char == ord('s') and speed > 0:
 			speed -= 1
 		else:
 			Robot.stop()
