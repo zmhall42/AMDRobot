@@ -1,11 +1,12 @@
 # This is to test both motors and PWM setup using classes and functions.  The class and 
-# dependent functions created here can be used to set up the motors in other bits of code.
+# dependent functions created here can be used to set up the motors in other bits of code
+# or together as a tank drive.
 #
 # 2021-04-23
 # Written by: The Autonomous Metal Detector Robot capstone group at TnTech.
 #
 #	What to check on next test with the robot:
-#	1. Check if Tank drive class works.
+#	1. Check if Tank drive class works.	***DONE, works fine
 #edit
 
 
@@ -22,7 +23,7 @@ class Motor:
 		self.direction_pin = direction_pin
 		self.clock_frequency = clock_frequency
 		self.reversed = reversed
-	def setup(self):
+	def setup(self):								#run either this or set up both sides at the same time with tank function
 		GPIO.setup(self.pwm_pin, GPIO.OUT)
 		GPIO.setup(self.direction_pin, GPIO.OUT)
 		self.m_pwm = GPIO.PWM(self.pwm_pin, self.clock_frequency)
@@ -47,14 +48,27 @@ class Tank:
 	def __init__(self, left, right):
 		self.left = left
 		self.right = right
-	def setup(self):
-		pass
+	def setup(self):								#run either this or set up both sides manually
+		self.left.setup()
+		self.right.setup()
 	def forward(self, duty_cycle):
 		self.left.forward(duty_cycle)
 		self.right.forward(duty_cycle)
 	def reverse(self, duty_cycle):
 		self.left.reverse(duty_cycle)
 		self.right.reverse(duty_cycle)
+	def left_on_axis(self, duty_cycle):				#spin to the left on center axis
+		self.left.reverse(duty_cycle)
+		self.right.forward(duty_cycle)
+	def left(self):									#spin around left track
+		self.left.stop()
+		self.right.forward(duty_cycle)
+	def right_on_axis(self, duty_cycle):			#spin to the right on center axis
+		self.left.forward(duty_cycle)
+		self.right.reverse(duty_cycle)
+	def right(self):								#spin around left track
+		self.left.forward(duty_cycle)
+		self.right.stop()
 	def stop(self):
 		self.left.stop()
 		self.right.stop()
@@ -77,9 +91,9 @@ mr_reversed = False;	#True if reversed, False if normal rotation
 
 #------------------------------Create and Setup Objects----------------------------------
 MR = Motor(mr_pwm_pin, mr_dir_pin, mr_clock_f, mr_reversed)
-MR.setup()
+#MR.setup()
 ML = Motor(ml_pwm_pin, ml_dir_pin, ml_clock_f, ml_reversed)
-ML.setup()
+#ML.setup()
 
 Robot = Tank(ML, MR)
 Robot.setup()
