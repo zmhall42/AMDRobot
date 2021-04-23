@@ -7,9 +7,9 @@
 import RPi.GPIO as GPIO		#include the GPIO library
 
 #----------------------------------Global Variables--------------------------------------
-m1_pwm_pin = 32	#GPIO 12 PWM for M1 - Left side
+m1_pwm_pin = 32	#GPIO 12 PWM for M1 - Right side
 m1_dir_pin = 29	#GPIO 5 DIR for M1 
-m2_pwm_pin = 12 #GPIO 18 PWM for M2 - Right SIde
+m2_pwm_pin = 12 #GPIO 18 PWM for M2 - Left SIde
 m2_dir_pin = 36	#GPIO 16 DIR for M2
 
 #-------------------------------------Pin Setup------------------------------------------
