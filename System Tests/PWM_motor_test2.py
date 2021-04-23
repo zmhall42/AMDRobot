@@ -18,6 +18,7 @@
 
 #-------------------------------------Libraries------------------------------------------
 import RPi.GPIO as GPIO		#include the GPIO library
+GPIO.setmode(GPIO.BOARD)	#use physical layout numbering system
 
 
 
@@ -52,16 +53,16 @@ class Motor:
 		
 		
 #----------------------------------Global Variables--------------------------------------
-#Right Side
+#Left Side
 ml_pwm_pin = 32	#GPIO 12 PWM for M1
 ml_dir_pin = 29	#GPIO 5 DIR for M1
 ml_clock_f = 1000	#PWM clock set to 1 kHz
 ml_reversed = False;	#True if reversed, False if normal rotation
-#Left Side
+#Right Side
 mr_pwm_pin = 12 #GPIO 18 PWM for M2 - Left SIde
 mr_dir_pin = 36	#GPIO 16 DIR for M2
 mr_clock_f = 1000	#PWM clock set to 1 kHz
-mr_reversed = False;	#True if reversed, False if normal rotation
+mr_reversed = True;	#True if reversed, False if normal rotation
 
 
 
@@ -74,6 +75,8 @@ ML.setup()
 
 
 #-------------------------------------Program Body---------------------------------------
+GPIO.output(ML.dir_pin, GPIO.HIGH)	#set direction fwd = high, rev = low
+GPIO.output(MR.dir_pin, GPIO.LOW)
 mr_pwm = GPIO.PWM(MR.pwm_pin, MR.clock_frequency)	#set PWM on ml_pwm_pin to 1 kHz PWM clock
 ml_pwm = GPIO.PWM(ML.pwm_pin, ML.clock_frequency)
 mr_pwm.start(25)					#25% duty cycle
