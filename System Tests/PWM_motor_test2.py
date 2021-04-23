@@ -31,21 +31,21 @@ class Motor:
 		self.reversed = reversed
 	def setup(self):
 		GPIO.setup(self.pwm_pin, GPIO.OUT)
-		GPIO.setup(self.dir_pin, GPIO.OUT)
+		GPIO.setup(self.direction_pin, GPIO.OUT)
 #		self.m_pwm = GPIO.PWM(self.pwm_pin, self.clock_frequency)
 #	def forward(self, speed):
 #		self.m_pwm.stop()							#stop
 #		if self.reversed == True:					#check if reversed and set correct direction
-#			GPIO.output(self.dir_pin, GPIO.HIGH)
+#			GPIO.output(self.direction_pin, GPIO.HIGH)
 #		else:
-#			GPIO.output(self.dir_pin, GPIO.LOW)
+#			GPIO.output(self.direction_pin, GPIO.LOW)
 #		self.m_pwm.start(speed)						#restart at new speed
 #	def reverse(self, speed):
 #		self.m_pwm.stop()							#stop
 #		if self.reversed == True:					#check if reversed and set correct direction
-#			GPIO.output(self.dir_pin, GPIO.LOW)
+#			GPIO.output(self.direction_pin, GPIO.LOW)
 #		else:
-#			GPIO.output(self.dir_pin, GPIO.HIGH)
+#			GPIO.output(self.direction_pin, GPIO.HIGH)
 #		self.m_pwm.start(speed)						#restart at new speed
 #	def stop(self)
 #		self.m_pwm.stop()							#stop
