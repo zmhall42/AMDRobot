@@ -51,7 +51,7 @@ class Motor:
 		self.m_pwm.ChangeDutyCycle(speed)			#restart at new speed
 	def m_stop(self):
 		self.m_pwm.ChangeDutyCycle(0)				#stop
-	def m_cleanup(self):
+	def ,_cleanup(self):
 		self.m_pwm.stop()
 
 class Tank:
