@@ -118,27 +118,27 @@ screen.keypad(True)			#use special values for cursor keys
 
 #-------------------------------------Program Body---------------------------------------
 try:
-	speed = 25
+	cycle_speed = 25
 	while True:
 		char = screen.getch()
 		if char == ord('e'):
 			break
 		elif char == curses.KEY_UP:
-			Robot.forward(speed)
+			Robot.forward(cycle_speed)
 		elif char == curses.KEY_DOWN:
-			Robot.reverse(speed)
+			Robot.reverse(cycle_speed)
 		elif char == curses.KEY_LEFT:
-			Robot.left(speed)
+			Robot.left(cycle_speed)
 		elif char == curses.KEY_RIGHT:
-			Robot.right(speed)
+			Robot.right(cycle_speed)
 		elif char == ord('l'):
-			Robot.left_on_axis(speed)
+			Robot.left_on_axis(cycle_speed)
 		elif char == ord('r'):
-			Robot.right_on_axis(speed)
-		elif char == ord('w') and speed < 100:
-			speed += 1
-		elif char == ord('s') and speed > 0:
-			speed -= 1
+			Robot.right_on_axis(cycle_speed)
+		elif char == ord('w') and cycle_speed < 100:
+			cycle_speed += 1
+		elif char == ord('s') and cycle_speed > 0:
+			cycle_speed -= 1
 		else:
 			Robot.stop()
 
