@@ -10,8 +10,6 @@
 #		d: turn right
 #		l: turn left on center axis
 #		r: turn right on center axis
-#		arrow up: increase speed
-#		arrow down: decrease speed
 #		e: stop the program
 
 
@@ -118,27 +116,23 @@ screen.keypad(True)			#use special values for cursor keys
 
 #-------------------------------------Program Body---------------------------------------
 try:
-	speed = 25
+	speed = 30
 	while True:
 		char = screen.getch()
 		if char == ord('e'):
 			break
-		elif char == curses.KEY_UP:
+		elif char == ord('w'):
 			Robot.forward(speed)
-		elif char == curses.KEY_DOWN:
+		elif char == ord('s'):
 			Robot.reverse(speed)
-		elif char == curses.KEY_LEFT:
+		elif char == ord('a'):
 			Robot.left(speed)
-		elif char == curses.KEY_RIGHT:
+		elif char == ord('d'):
 			Robot.right(speed)
 		elif char == ord('l'):
 			Robot.left_on_axis(speed)
 		elif char == ord('r'):
 			Robot.right_on_axis(speed)
-		elif char == ord('w') and speed < 100:
-			speed += 1
-		elif char == ord('s') and speed > 0:
-			speed -= 1
 		else:
 			Robot.stop()
 
