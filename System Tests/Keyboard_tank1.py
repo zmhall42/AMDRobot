@@ -16,6 +16,11 @@
 #		2021-04-23_19:00	When running the code, w & s work fine, a or d breaks it.
 #			The error on the terminal is this: AttributeError: Robot instance has no __call__ method
 #			Not sure why.  Changed self attribute of Motor to motor and of Tank to tank.
+#		2021-04-23_23:45	Found the problem.  There was a Tank.left which was the left 
+# 			motor and Tank.left() which was turn the tank left.  A class cannot have an
+#			attribute and a method named the same.  Reverted the motor and tank listed 
+# 			above back to self and reset some variable names.  Implemented the motor name
+#			changes in the Tank class.
 
 
 
@@ -29,67 +34,67 @@ GPIO.setwarnings(False)		#turns off warning messages
 
 
 #---------------------------------Class Definitions--------------------------------------
-#never include anything in the motor position of the class/function calls (ex. use motor_name.setup(), NOT motor_name.setup(variable) because motor is ignored)
+#never include anything in the self position of the class/function calls (ex. use self_name.setup(), NOT self_name.setup(variable) because self is ignored)
 class Motor:
-	def __init__(motor, pwm_pin, direction_pin, clock_frequency, reversed):
-		motor.pwm_pin = pwm_pin
-		motor.direction_pin = direction_pin
-		motor.clock_frequency = clock_frequency
-		motor.reversed = reversed
-	def setup(motor):								#run either this or set up both sides at the same time with tank function
-		GPIO.setup(motor.pwm_pin, GPIO.OUT)
-		GPIO.setup(motor.direction_pin, GPIO.OUT)
-		motor.m_pwm = GPIO.PWM(motor.pwm_pin, motor.clock_frequency)
-		motor.m_pwm.start(0)							#start at 0 duty cycle
-	def forward(motor, speed):
-		if motor.reversed == True:					#check if reversed and set correct direction
-			GPIO.output(motor.direction_pin, GPIO.HIGH)
+	def __init__(self, pwm_pin, direction_pin, clock_frequency, reversed):
+		self.pwm_pin = pwm_pin
+		self.direction_pin = direction_pin
+		self.clock_frequency = clock_frequency
+		self.reversed = reversed
+	def setup(self):								#run either this or set up both sides at the same time with tank function
+		GPIO.setup(self.pwm_pin, GPIO.OUT)
+		GPIO.setup(self.direction_pin, GPIO.OUT)
+		self.m_pwm = GPIO.PWM(self.pwm_pin, self.clock_frequency)
+		self.m_pwm.start(0)							#start at 0 duty cycle
+	def forward(self, duty_cycle):
+		if self.reversed == True:					#check if reversed and set correct direction
+			GPIO.output(self.direction_pin, GPIO.HIGH)
 		else:
-			GPIO.output(motor.direction_pin, GPIO.LOW)
-		motor.m_pwm.ChangeDutyCycle(speed)			#restart at new speed
-	def reverse(motor, speed):
-		if motor.reversed == True:					#check if reversed and set correct direction
-			GPIO.output(motor.direction_pin, GPIO.LOW)
+			GPIO.output(self.direction_pin, GPIO.LOW)
+		self.m_pwm.ChangeDutyCycle(duty_cycle)			#restart at new duty_cycle
+	def reverse(self, duty_cycle):
+		if self.reversed == True:					#check if reversed and set correct direction
+			GPIO.output(self.direction_pin, GPIO.LOW)
 		else:
-			GPIO.output(motor.direction_pin, GPIO.HIGH)
-		motor.m_pwm.ChangeDutyCycle(speed)			#restart at new speed
-	def stop(motor):
-		motor.m_pwm.ChangeDutyCycle(0)				#stop
-	def cleanup(motor):
-		motor.m_pwm.stop()
+			GPIO.output(self.direction_pin, GPIO.HIGH)
+		self.m_pwm.ChangeDutyCycle(duty_cycle)			#restart at new duty_cycle
+	def stop(self):
+		self.m_pwm.ChangeDutyCycle(0)				#stop
+	def cleanup(self):
+		self.m_pwm.stop()
 
-#never include anything in the tank position of the class/function calls (ex. use motor_name.setup(), NOT motor_name.setup(variable) because tank is ignored)
+#never include anything in the self position of the class/function calls (ex. use self_name.setup(), NOT self_name.setup(variable) because self is ignored)
 class Tank:
-	def __init__(tank, left, right):
-		tank.left = left
-		tank.right = right
-	def setup(tank):								#run either this or set up both sides manually
-		tank.left.setup()
-		tank.right.setup()
-	def forward(tank, duty_cycle):
-		tank.left.forward(duty_cycle)
-		tank.right.forward(duty_cycle)
-	def reverse(tank, duty_cycle):
-		tank.left.reverse(duty_cycle)
-		tank.right.reverse(duty_cycle)
-	def left_on_axis(tank, duty_cycle):				#spin to the left on center axis
-		tank.left.reverse(duty_cycle)
-		tank.right.forward(duty_cycle)
-	def left(tank, duty_cycle):						#spin around left track
-		tank.left.stop()
-		tank.right.forward(duty_cycle)
-	def right_on_axis(tank, duty_cycle):			#spin to the right on center axis
-		tank.left.forward(duty_cycle)
-		tank.right.reverse(duty_cycle)
-	def right(tank, duty_cycle):					#spin around left track
-		tank.left.forward(duty_cycle)
-		tank.right.stop()
-	def stop(tank):
-		tank.left.stop()
-		tank.right.stop()
-	def cleanup(tank):
-		tank.left.cleanup()
-		tank.right.cleanup()
+	def __init__(self, left, right):
+		self.left_motor = left
+		self.right_motor = right
+	def setup(self):								#run either this or set up both sides manually
+		self.left_motor.setup()
+		self.right_motor.setup()
+	def forward(self, duty_cycle):
+		self.left_motor.forward(duty_cycle)
+		self.right_motor.forward(duty_cycle)
+	def reverse(self, duty_cycle):
+		self.left_motor.reverse(duty_cycle)
+		self.right_motor.reverse(duty_cycle)
+	def left_on_axis(self, duty_cycle):				#spin to the left on center axis
+		self.left_motor.reverse(duty_cycle)
+		self.right_motor.forward(duty_cycle)
+	def left(self, duty_cycle):						#spin around left track
+		self.left_motor.stop()
+		self.right_motor.forward(duty_cycle)
+	def right_on_axis(self, duty_cycle):			#spin to the right on center axis
+		self.left_motor.forward(duty_cycle)
+		self.right_motor.reverse(duty_cycle)
+	def right(self, duty_cycle):					#spin around right track
+		self.left_motor.forward(duty_cycle)
+		self.right_motor.stop()
+	def stop(self):
+		self.left_motor.stop()
+		self.right_motor.stop()
+	def cleanup(self):
+		self.left_motor.cleanup()
+		self.right_motor.cleanup()
 	
 		
 		
@@ -124,23 +129,23 @@ screen.keypad(True)			#use special values for cursor keys
 
 #-------------------------------------Program Body---------------------------------------
 try:
-	speed = 30
+	duty_cycle = 30
 	while True:
 		char = screen.getch()
 		if char == ord('e'):
 			break
 		elif char == ord('w'):
-			Robot.forward(speed)
+			Robot.forward(duty_cycle)
 		elif char == ord('s'):
-			Robot.reverse(speed)
+			Robot.reverse(duty_cycle)
 		elif char == ord('a'):
-			Robot.left(speed)
+			Robot.left(duty_cycle)
 		elif char == ord('d'):
-			Robot.right(speed)
+			Robot.right(duty_cycle)
 		elif char == ord('l'):
-			Robot.left_on_axis(speed)
+			Robot.left_on_axis(duty_cycle)
 		elif char == ord('r'):
-			Robot.right_on_axis(speed)
+			Robot.right_on_axis(duty_cycle)
 		else:
 			Robot.stop()
 

@@ -57,18 +57,6 @@ class Tank:
 	def reverse(self, duty_cycle):
 		self.left.reverse(duty_cycle)
 		self.right.reverse(duty_cycle)
-	def left_on_axis(self, duty_cycle):				#spin to the left on center axis
-		self.left.reverse(duty_cycle)
-		self.right.forward(duty_cycle)
-	def left(self, duty_cycle):						#spin around left track
-		self.left.stop()
-		self.right.forward(duty_cycle)
-	def right_on_axis(self, duty_cycle):			#spin to the right on center axis
-		self.left.forward(duty_cycle)
-		self.right.reverse(duty_cycle)
-	def right(self, duty_cycle):					#spin around left track
-		self.left.forward(duty_cycle)
-		self.right.stop()
 	def stop(self):
 		self.left.stop()
 		self.right.stop()
@@ -98,7 +86,7 @@ Robot.setup()
 
 
 #-------------------------------------Program Body---------------------------------------
-Robot.left(25)					#change this line to test each direction/rotation
+Robot.forward(25)					#change this line to test each direction/rotation
 throw_away_val = input("Enter some char and press enter to stop: ")	#stops the robot
 Robot.stop()						#stops tank
 GPIO.cleanup()						#used to clean up anything the GPIO library creates
