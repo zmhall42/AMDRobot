@@ -51,13 +51,13 @@ class Motor:
 			GPIO.output(self.direction_pin, GPIO.HIGH)
 		else:
 			GPIO.output(self.direction_pin, GPIO.LOW)
-		self.m_pwm.ChangeDutyCycle(duty_cycle)			#restart at new duty_cycle
+		self.m_pwm.ChangeDutyCycle(duty_cycle)		#restart at new duty_cycle
 	def reverse(self, duty_cycle):
 		if self.reversed == True:					#check if reversed and set correct direction
 			GPIO.output(self.direction_pin, GPIO.LOW)
 		else:
 			GPIO.output(self.direction_pin, GPIO.HIGH)
-		self.m_pwm.ChangeDutyCycle(duty_cycle)			#restart at new duty_cycle
+		self.m_pwm.ChangeDutyCycle(duty_cycle)		#restart at new duty_cycle
 	def stop(self):
 		self.m_pwm.ChangeDutyCycle(0)				#stop
 	def cleanup(self):
