@@ -132,7 +132,7 @@ try:
 	duty_cycle = 30
 	while True:
 		char = screen.getch()
-		if char == ord('e'):
+		if char == ord('c'):
 			break
 		elif char == ord('w'):
 			Robot.forward(duty_cycle)
