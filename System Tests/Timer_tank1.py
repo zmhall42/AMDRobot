@@ -51,14 +51,14 @@ class Tank:
 	def __init__(self, left, right, left_trim = 0, right_trim = 0):
 		self.left_motor = left
 		self.right_motor = right
-        self.left_trim = left_trim
-        self.right_trim = right_trim
+                self.left_trim = left_trim
+                self.right_trim = right_trim
 	def setup(self):								#run either this or set up both sides manually
 		self.left_motor.setup()
 		self.right_motor.setup()
-    def trim(self, left, right):
-        self.left_trim = left
-        self.right_trim = right
+        def trim(self, left, right):
+     		self.left_trim = left
+        	self.right_trim = right
 	def forward(self, duty_cycle):
 		self.left_motor.forward(duty_cycle + self.left_trim)
 		self.right_motor.forward(duty_cycle + self.right_trim)
@@ -80,6 +80,7 @@ class Tank:
 	def stop(self):
 		self.left_motor.stop()
 		self.right_motor.stop()
+		sleep(0.500)
 	def cleanup(self):
 		self.left_motor.cleanup()
 		self.right_motor.cleanup()
@@ -107,29 +108,25 @@ Robot = Tank(ML, MR)
 Robot.setup()
 
 speed = 25
+Robot.trim(0, 1.5)
 Robot.forward(speed)
-sleep(9.300)
+sleep(8.300)
 Robot.stop()
-sleep(0.500)
-Robot.left_on_axis(speed)
-sleep(0.880)
+Robot.left(speed)
+sleep(1.750)
 Robot.stop()
-sleep(0.500)
-#Robot.forward(speed)
-#sleep(2.000)
-#Robot.stop()
-#sleep(0.500)
+Robot.forward(speed)
+sleep(2.000)
+Robot.stop()
 #Robot.left_on_axis(speed)
 #sleep(3.250)
 #Robot.stop()
-#sleep(0.500)
 #Robot.forward(speed)
 #sleep(2.000)
 #Robot.stop()
 #Robot.right_on_axis(speed)
 #sleep(0.880)
 #Robot.stop()
-#sleep(0.500)
 #Robot.forward(speed)
 #sleep(9.300)
 #Robot.stop()
