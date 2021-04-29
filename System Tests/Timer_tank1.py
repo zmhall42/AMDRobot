@@ -103,7 +103,7 @@ Robot.setup()
 
 speed = 25
 Robot.forward(speed)
-time.sleep(1.000)
+sleep(1.000)
 Robot.stop()
 
 # Cleanup code
