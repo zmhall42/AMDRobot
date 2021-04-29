@@ -56,7 +56,7 @@ class Tank:
 	def setup(self):								#run either this or set up both sides manually
 		self.left_motor.setup()
 		self.right_motor.setup()
-    def trim(self, left, right)
+    def trim(self, left, right):
         self.left_trim = left
         self.right_trim = right
 	def forward(self, duty_cycle):
