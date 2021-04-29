@@ -48,29 +48,34 @@ class Motor:
 
 #never include anything in the self position of the class/function calls (ex. use self_name.setup(), NOT self_name.setup(variable) because self is ignored)
 class Tank:
-	def __init__(self, left, right):
+	def __init__(self, left, right, left_trim = 0, right_trim = 0):
 		self.left_motor = left
 		self.right_motor = right
+        self.left_trim = left_trim
+        self.right_trim = right_trim
 	def setup(self):								#run either this or set up both sides manually
 		self.left_motor.setup()
 		self.right_motor.setup()
+    def trim(self, left, right):
+        self.left_trim = left
+        self.right_trim = right
 	def forward(self, duty_cycle):
-		self.left_motor.forward(duty_cycle)
-		self.right_motor.forward(duty_cycle)
+		self.left_motor.forward(duty_cycle + self.left_trim)
+		self.right_motor.forward(duty_cycle + self.right_trim)
 	def reverse(self, duty_cycle):
-		self.left_motor.reverse(duty_cycle)
-		self.right_motor.reverse(duty_cycle)
+		self.left_motor.reverse(duty_cycle + self.left_trim)
+		self.right_motor.reverse(duty_cycle + self.right_trim)
 	def left_on_axis(self, duty_cycle):				#spin to the left on center axis
-		self.left_motor.reverse(duty_cycle)
-		self.right_motor.forward(duty_cycle)
+		self.left_motor.reverse(duty_cycle + self.left_trim)
+		self.right_motor.forward(duty_cycle + self.right_trim)
 	def left(self, duty_cycle):						#spin around left track
 		self.left_motor.stop()
-		self.right_motor.forward(duty_cycle)
+		self.right_motor.forward(duty_cycle + self.right_trim)
 	def right_on_axis(self, duty_cycle):			#spin to the right on center axis
-		self.left_motor.forward(duty_cycle)
-		self.right_motor.reverse(duty_cycle)
+		self.left_motor.forward(duty_cycle + self.left_trim)
+		self.right_motor.reverse(duty_cycle + self.right_trim)
 	def right(self, duty_cycle):					#spin around right track
-		self.left_motor.forward(duty_cycle)
+		self.left_motor.forward(duty_cycle  + self.left_trim)
 		self.right_motor.stop()
 	def stop(self):
 		self.left_motor.stop()
