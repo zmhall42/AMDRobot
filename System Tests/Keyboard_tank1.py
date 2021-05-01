@@ -129,7 +129,7 @@ screen.keypad(True)			#use special values for cursor keys
 
 #-------------------------------------Program Body---------------------------------------
 try:
-	duty_cycle = 100
+	duty_cycle = 20
 	while True:
 		char = screen.getch()
 		if char == ord('e'):
